@@ -1,27 +1,30 @@
 <?php
 namespace app\index\controller;
 
-use oobio\lib\conf;
+use app\index\model\User;
+use oobio\lib\Request;
 use oobio\oobio;
 
-class indexController extends oobio{
+class Index extends oobio
+{
 
     /**
      *
      * @throws \Exception
      */
     public function index(){
-        $data = '这是网站前台模块!';
-        $this->assign('data',$data);
-        return $this->display('',['siteTitle'  =>  'OoBox PHP']);
+        $request = new Request();
+        $get = $request->get('id');
+        dump($get);
+        $model = new User();
+        $user = $model->lists();
+        $this->assign([
+            'data' => $user,
+            'siteTitle' => 'OoBox PHP'
+        ]);
+        $this->display('');
     }
 
-    public function test(){
-        $data = 'test';
-        $this->assign('data',$data);
-       return $this->display();
-    }
-    
     /**
      * 测试调用公共函数
      */

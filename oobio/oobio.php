@@ -18,7 +18,7 @@ use oobio\lib\Route;
 class oobio{
 
     public static $classMap = [];
-    public $assign;
+    public $data = [];
     public static $module; //访问模块
     public static $controller; // 访问控制器
     public static $action; // 访问方法
@@ -37,7 +37,7 @@ class oobio{
         self::$controller   =   $route->controller;
         self::$action       =   $route->action;
 
-        $ctrlClass='\\app\\'.self::$module.'\\controller\\'.self::$controller.'Controller';
+        $ctrlClass = '\\app\\' . self::$module . '\\controller\\' . self::$controller;
         $prm = $_POST?$_POST:$_GET;
         //  参数绑定
         self::url_params_bind($ctrlClass,self::$action,$prm);
@@ -65,8 +65,20 @@ class oobio{
         }
     }
 
-    public function assign($name,$value){
-        $this->assign[$name]=$value;
+    /***
+     * 模板变量输出
+     * @param $name
+     * @param string $value
+     * @return $this
+     */
+    public function assign($name, $value = '')
+    {
+        if (is_array($name)) {
+            $this->data = array_merge($this->data, $name);
+        } else {
+            $this->data[$name] = $value;
+        }
+        return $this;
     }
 
     /**
@@ -77,9 +89,9 @@ class oobio{
      * @throws \Exception
      */
     public function display($file = NULL ,$data = NULL ,$ext = ".html"){
-        if(isset($data)){
-            $this->assign = $data;
-        }
+//        if (isset($data)){
+//            $this->data[$]
+//        }
         $sourcefile = $file ? $file . $ext: self::$action . $ext; //模板文件重命名
         // TEMPPLATE_PATH . . self::$module . self::$controller . DS .$sourcefile;
         $path = TEMPPLATE_PATH . self::$module . self::$controller . DS .$sourcefile ?
@@ -94,8 +106,7 @@ class oobio{
             $smarty->setTemplateDir(TEMPPLATE_PATH); //设置模板目录
             $smarty->setCompileDir(RUNTIME_PATH . '/templates/cache');
             $smarty->setCacheDir(RUNTIME_PATH . '/templates/smarty_cache/');
-
-            $smarty->assign($this->assign?$this->assign:array());
+            $smarty->assign($this->data ? $this->data : []);
             $smarty->display($path);
         }else{
             throw new \Exception('模板文件不存在:'.$path);

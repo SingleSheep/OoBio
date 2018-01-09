@@ -68,89 +68,70 @@ class Request
     }
 
     /**
-     * 获取当前请求的参数
-     * @access public
-     * @param string|array  $name 变量名
-     * @param mixed         $default 默认值
-     * @param string|array  $filter 过滤方法
-     * @return mixed
+     * 获取 POST 参数
+     * @param $name
+     * @param bool $default
+     * @param bool $fitt
+     * @return bool
      */
-    public function param($name = '', $default = null, $filter = '')
+    function post($name, $default = false, $fitt = false)
     {
-        if (empty($this->param)) {
-            $method = $this->method(true);
-            // 自动获取请求变量
-            switch ($method) {
-                case 'POST':
-                    $vars = $this->post(false);
-                    break;
-                case 'PUT':
-                case 'DELETE':
-                case 'PATCH':
-                    $vars = $this->put(false);
-                    break;
-                default:
-                    $vars = array();
+        if (isset($_POST[$name])) {
+            if ($fitt) {
+                switch ($fitt) {
+                    case 'int':
+                        {
+                            if (is_numeric($_POST[$name])) {
+                                return $_POST[$name];
+                            } else {
+                                return $default;
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
+            } else {
+                return $_POST[$name];
             }
-            // 当前请求参数和URL地址中的参数合并
-            $this->param = array_merge($this->get(false), $vars, $this->route(false));
+        } else {
+            return $default;
         }
-        if (true === $name) {
-            // 获取包含文件上传信息的数组
-            $file = $this->file();
-            $data = is_array($file) ? array_merge($this->param, $file) : $this->param;
-            return $this->input($data, '', $default, $filter);
-        }
-        return $this->input($this->param, $name, $default, $filter);
     }
 
     /**
-     * 当前的请求类型
-     * @access public
-     * @param bool $method  true 获取原始请求类型
-     * @return string
+     * 获取 GET 参数
+     * @param $name
+     * @param bool $default
+     * @param bool $fitt
+     * @return bool
      */
-    public function method($method = false)
+    public function get($name, $default = false, $fitt = false)
     {
-        if (true === $method) {
-            // 获取原始请求类型
-            return IS_CLI ? 'GET' : (isset($this->server['REQUEST_METHOD']) ? $this->server['REQUEST_METHOD'] : $_SERVER['REQUEST_METHOD']);
-        } elseif (!$this->method) {
-            if (isset($_POST[Config::get('var_method')])) {
-                $this->method = strtoupper($_POST[Config::get('var_method')]);
-                $this->{$this->method}($_POST);
-            } elseif (isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
-                $this->method = strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
+        if (isset($_GET[$name])) {
+            if ($fitt) {
+                switch ($fitt) {
+                    case 'int':
+                        {
+                            if (is_numeric($_GET[$name])) {
+                                return $_GET[$name];
+                            } else {
+                                return $default;
+                            }
+                            break;
+                        }
+                    default:
+                        {
+                            break;
+                        }
+                }
             } else {
-                $this->method = IS_CLI ? 'GET' : (isset($this->server['REQUEST_METHOD']) ? $this->server['REQUEST_METHOD'] : $_SERVER['REQUEST_METHOD']);
+                return $_GET[$name];
             }
+        } else {
+            return $default;
         }
-        return $this->method;
     }
-
-    /**
-     * 设置获取POST参数
-     * @access public
-     * @param string        $name 变量名
-     * @param mixed         $default 默认值
-     * @param string|array  $filter 过滤方法
-     * @return mixed
-     */
-    public function post($name = '', $default = null, $filter = '')
-    {
-        if (empty($this->post)) {
-            $content = $this->input;
-            if (empty($_POST) && false !== strpos($this->contentType(), 'application/json')) {
-                $this->post = (array) json_decode($content, true);
-            } else {
-                $this->post = $_POST;
-            }
-        }
-        if (is_array($name)) {
-            $this->param       = [];
-            return $this->post = array_merge($this->post, $name);
-        }
-        return $this->input($this->post, $name, $default, $filter);
-    }
-
 }

@@ -10,8 +10,14 @@ namespace app\index\model;
 
 use oobio\lib\model;
 
-class userModel extends model
+class User extends model
 {
     protected $table = "user";
+
+    public function lists()
+    {
+        $result = $this->select($this->table, '*');
+        return $result;
+    }
 
 }
