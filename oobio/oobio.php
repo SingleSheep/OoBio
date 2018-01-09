@@ -11,10 +11,9 @@
 // Oobio 公共入口文件
 
 namespace oobio;
-
 use oobio\lib\log;
-use oobio\lib\request;
-use oobio\lib\route;
+use oobio\lib\Request;
+use oobio\lib\Route;
 
 class oobio{
 
@@ -30,9 +29,10 @@ class oobio{
      * @throws \Exception
      */
     public static function run(){
-        //实例路由
-        $route = new route();
-        $request = new request();
+        //实例路由s
+        $route = new Route();
+        $request = new Request();
+
         self::$module       =   $route->module;
         self::$controller   =   $route->controller;
         self::$action       =   $route->action;
@@ -92,8 +92,8 @@ class oobio{
             $smarty->right_delimiter = "}";
             $smarty->setConfigDir(CONF_PATH );
             $smarty->setTemplateDir(TEMPPLATE_PATH); //设置模板目录
-            $smarty->setCompileDir(RUNTIME_PATH . '/cache/templates/');
-            $smarty->setCacheDir(RUNTIME_PATH . '/cache/smarty_cache/');
+            $smarty->setCompileDir(RUNTIME_PATH . '/templates/cache');
+            $smarty->setCacheDir(RUNTIME_PATH . '/templates/smarty_cache/');
 
             $smarty->assign($this->assign?$this->assign:array());
             $smarty->display($path);
