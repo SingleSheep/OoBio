@@ -16,6 +16,7 @@
     "php":">= 5.4.0",
     "filp/whoops":"*",
     "symfony/var-dumper":"*",
+    "twig/twig":"*",
     "catfan/medoo":"*",
     "smarty/smarty": "^3.1"
   }
