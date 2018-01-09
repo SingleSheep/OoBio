@@ -1,0 +1,22 @@
+{
+  "name": "OoBox/oobio",
+  "description": "OoBox PHP Framework",
+  "type": "PHP Framework",
+  "keywords": [
+    "framework","OoBio","ORM","MVC"
+  ],
+  "license": "Apache2",
+  "authors": [
+    {
+      "name": "OoBio",
+      "email": "1078509454@qq.com"
+    }
+  ],
+  "require":{
+    "php":">= 5.4.0",
+    "filp/whoops":"*",
+    "symfony/var-dumper":"*",
+    "catfan/medoo":"*",
+    "smarty/smarty": "^3.1"
+  }
+}
