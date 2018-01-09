@@ -12,7 +12,7 @@
 
 namespace oobio\lib;
 
-class route
+class Route
 {
 
     public $module=MODULE; #默认模块
@@ -27,6 +27,7 @@ class route
          * 2.获取URL参数部分
          * 3.返回对应控制器和方法
          */
+
         $path = strstr($_SERVER['REQUEST_URI'],'?',true); # 去掉URL?号后面字符串(包括?)
         $path = $path?$path:$_SERVER['REQUEST_URI'];
         if(isset($_SERVER['REQUEST_URI'])&&$path!='/'){
@@ -35,17 +36,17 @@ class route
 
             // index/index/id/01/name/dejan/sex/man
             //  [0]/[1] /[2]/[3]/[4] / [5] /[6]/[7]
-            $path = str_replace('.html','',$path);
+            $path = str_replace('.html', '', $path);
             $patharr = explode('/',trim($path,'/'));
             if(isset($patharr[0])){
                 // 判断访问应用模块
                 if(is_dir(APP.'/'.$patharr[0])){
-                    $this->module=$patharr[0];
-                    $this->controller=isset($patharr[1])?$patharr[1]:conf::get('CONTROLLER','route');
+                    $this->module = $patharr[0];
+                    $this->controller = isset($patharr[1]) ? $patharr[1] : Conf::get('CONTROLLER', 'route');
                     if(isset($patharr[2])){
-                        $this->action=$patharr[2];
+                        $this->action = $patharr[2];
                     }else{
-                        $this->action=conf::get('ACTION','route');
+                        $this->action = Conf::get('ACTION', 'route');
                     }
                     $i=3; // GET参数获取索引起始位置
                 }else{ // 默认 Home 模块
@@ -53,7 +54,7 @@ class route
                     if(isset($patharr[1])){
                         $this->action=$patharr[1];
                     }else{
-                        $this->action=conf::get('ACTION','route');
+                        $this->action = Conf::get('ACTION', 'route');
                     }
                     $i=2; // GET参数获取索引起始位置
                 }
@@ -70,8 +71,8 @@ class route
                 $i=$i+2;
             }
         }else{
-            $this->controller=conf::get('CONTROLLER','route');
-            $this->action=conf::get('ACTION','route');
+            $this->controller = Conf::get('CONTROLLER', 'route');
+            $this->action = Conf::get('ACTION', 'route');
         }
 
         // 加载公共函数库

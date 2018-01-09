@@ -13,7 +13,8 @@
 namespace oobio\lib;
 
 
-class conf{
+class Conf
+{
 
     /**
      * @var array

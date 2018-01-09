@@ -61,8 +61,8 @@ code {
 	border-bottom:1px dotted #666;
 }
 small {
-	background:url(../images/alpha.png);
-	background:rgba(0, 0, 0, 0.8) url();	
+	background: url(../images/logo1.png);
+	background: rgba(0, 0, 0, 0.8);
 	border:1px solid #111;
 	font-size:15px;
 	padding:0 5px;
@@ -208,7 +208,7 @@ border:1px solid #1e7ccd;
 }
 
 #overlay{
-background: rgba(0, 0, 0, 0.56) url(../images/overlays/01.png) top left repeat;
+	background: rgba(0, 0, 0, 0.56) url(../images/bg.jpg) top left repeat;
 position: fixed;
 top: 0px;
 width: 100%;

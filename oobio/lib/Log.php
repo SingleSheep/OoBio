@@ -12,7 +12,8 @@
 namespace oobio\lib;
 use oobio\lib\drive\log as logdrive;
 
-class log{
+class Log
+{
 
     /**
      * 日志存储驱动

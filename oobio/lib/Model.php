@@ -13,7 +13,7 @@
 namespace oobio\lib;
 use Medoo\Medoo;
 
-class model extends Medoo
+class Model extends Medoo
 {
     public function __construct()
     {

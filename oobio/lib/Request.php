@@ -11,7 +11,8 @@
 
 namespace oobio\lib;
 
-class request {
+class Request
+{
     /**
      * @var array 请求参数
      */

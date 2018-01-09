@@ -9,7 +9,7 @@
  */
 
 // Oobio 入口文件
-namespace oobio;
+
 //  引导文件
 // 1. 加载基础文件
 require __DIR__ . ('/../vendor/autoload.php');
@@ -18,4 +18,4 @@ require __DIR__ . '/oobio.php';
 require __DIR__ . '/base.php';
 
 // 2. 执行应用
-oobio::run();
+\oobio\oobio::run();

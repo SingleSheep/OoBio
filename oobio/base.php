@@ -12,7 +12,7 @@
 define('OOBIO_VERSION', '1.0');
 define('DS', DIRECTORY_SEPARATOR);
 defined('MODULE') or define('MODULE', 'index'); // 默认访问
-defined('ROOT') or define('ROOT',realpath('./') . DS); //当前项目根目录路径;
+defined('ROOT') or define('ROOT', dirname(realpath('./')) . DS); //当前项目根目录路径;
 defined('CORE') or define('CORE', ROOT.'oobio' .DS);//框架的核心文件目录
 defined('DEBUG') or define('DEBUG', true);//是否开启调试模式
 defined('APP') or define('APP', ROOT . 'app'. DS);//项目文件目录
