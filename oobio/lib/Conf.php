@@ -44,7 +44,8 @@ class Conf
                     self::$conf[$file]=$conf;
                     return $conf[$name];
                 }else{
-                    return $conf;
+                    //默认返回config下的配置
+                    self::$conf[$file] = $conf;
                     //throw new \Exception('没有这个配置项'.$name);
                 }
             }else{
@@ -54,7 +55,7 @@ class Conf
     }
 
     /**
-     *
+     * 读取所有配置
      * @param $file
      * @return mixed
      * @throws \Exception

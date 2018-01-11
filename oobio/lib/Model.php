@@ -17,7 +17,7 @@ class Model extends Medoo
 {
     public function __construct()
     {
-        $options = conf::all('database');
+        $options = Conf::all('database');
         parent::__construct($options);
     }
 

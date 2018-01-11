@@ -19,14 +19,15 @@ class Log
      * 日志存储驱动
      * @var
      */
-    static public $drive;
+    public static $drive;
 
 
     /**
      * 初始化
      * @throws \Exception
      */
-    static public function init(){
+    public static function init()
+    {
         //读取配置储存方式
         $drive=conf::get('DRIVE','log');
         if ($drive == 'file'){
@@ -44,7 +45,8 @@ class Log
      * @param $name
      * @param string $file
      */
-    static public function record($name,$file = 'log'){
+    public static function record($name, $file = 'log')
+    {
         self::$drive->save($name,$file);
     }
 

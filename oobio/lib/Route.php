@@ -30,14 +30,15 @@ class Route
 
         $path = strstr($_SERVER['REQUEST_URI'],'?',true); # 去掉URL?号后面字符串(包括?)
         $path = $path?$path:$_SERVER['REQUEST_URI'];
-        if(isset($_SERVER['REQUEST_URI'])&&$path!='/'){
+        if (isset($_SERVER['REQUEST_URI']) && $path != '/') {
+            // 参数返回为数组
             // admin/index/index/id/01/name/dejan/sex/man
             //  [0] /[1] /[2] /[3]/[4]/[5] /[6] /[7] /[8]
 
             // index/index/id/01/name/dejan/sex/man
             //  [0]/[1] /[2]/[3]/[4] / [5] /[6]/[7]
             $path = str_replace('.html', '', $path);
-            $patharr = explode('/',trim($path,'/'));
+            $patharr = explode('/', trim($path, '/'));
             if(isset($patharr[0])){
                 // 判断访问应用模块
                 if(is_dir(APP.'/'.$patharr[0])){

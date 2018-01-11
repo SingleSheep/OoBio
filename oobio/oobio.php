@@ -89,9 +89,14 @@ class oobio{
      * @throws \Exception
      */
     public function display($file = NULL ,$data = NULL ,$ext = ".html"){
-//        if (isset($data)){
-//            $this->data[$]
-//        }
+
+        if (isset($data)) {
+            if (is_array($data)) {
+                $this->data = array_merge($this->data, $data);
+            } else {
+                $this->data[$data['0']] = $data['1'];
+            }
+        }
         $sourcefile = $file ? $file . $ext: self::$action . $ext; //模板文件重命名
         // TEMPPLATE_PATH . . self::$module . self::$controller . DS .$sourcefile;
         $path = TEMPPLATE_PATH . self::$module . self::$controller . DS .$sourcefile ?
@@ -106,6 +111,7 @@ class oobio{
             $smarty->setTemplateDir(TEMPPLATE_PATH); //设置模板目录
             $smarty->setCompileDir(RUNTIME_PATH . '/templates/cache');
             $smarty->setCacheDir(RUNTIME_PATH . '/templates/smarty_cache/');
+
             $smarty->assign($this->data ? $this->data : []);
             $smarty->display($path);
         }else{

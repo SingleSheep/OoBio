@@ -13,16 +13,10 @@ class Index extends oobio
      * @throws \Exception
      */
     public function index(){
-        $request = new Request();
-        $get = $request->get('id');
-        dump($get);
-        $model = new User();
-        $user = $model->lists();
         $this->assign([
-            'data' => $user,
-            'siteTitle' => 'OoBox PHP'
+            'data' => '变量绑定输出'
         ]);
-        $this->display('');
+        $this->display('', ['siteTitle' => 'OoBox PHP']);
     }
 
     /**
