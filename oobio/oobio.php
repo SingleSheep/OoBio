@@ -3,7 +3,7 @@
  * Oobio - 简单、高效的PHP微框架
  * Copyright (c) 2018 Oobio . All rights reserved.
  * Author: 勇敢的小笨羊
- * Github: https://github.com/superpig595/OoBio
+ * Github: https://github.com/SingleSheep/OoBio
  * Weibo: http://weibo.com/xuzuxing
  *
  */
@@ -11,6 +11,7 @@
 // Oobio 公共入口文件
 
 namespace oobio;
+use oobio\lib\Conf;
 use oobio\lib\log;
 use oobio\lib\Request;
 use oobio\lib\Route;
@@ -44,9 +45,7 @@ class oobio{
 
 
         log::init();
-        //log::record('[ ROUTE ] controller:'.$ctrlClass .' action:'.self::$action, 'info');
         Log::record('[ HEADER ] ' . var_export($request->header(), true), 'info');
-        //Log::record('[ PARAM ] ' . var_export($request->param(), true), 'info');
     }
 
 
@@ -55,10 +54,10 @@ class oobio{
         if(isset($classMap[$class])){
             return true;
         }else{
-            $class = str_replace('\\','/',$class);
-            if(is_file(ROOT.'/'.$class.'.php')){
-                include ROOT.'/'.$class.'.php';
-                self::$classMap[$class]=$class;
+            $class = str_replace('\\',DS,$class);
+            if(is_file(ROOT . DS . $class . EXT)){
+                include ROOT . DS . $class . EXT;
+                self::$classMap[$class] = $class;
             }else{
                 return false;
             }
@@ -85,10 +84,9 @@ class oobio{
      * 模板展示输出
      * @param null $file
      * @param null $data
-     * @param string $ext
      * @throws \Exception
      */
-    public function display($file = NULL ,$data = NULL ,$ext = ".html"){
+    public function display($file = NULL ,$data = NULL){
 
         if (isset($data)) {
             if (is_array($data)) {
@@ -97,16 +95,16 @@ class oobio{
                 $this->data[$data['0']] = $data['1'];
             }
         }
-        $sourcefile = $file ? $file . $ext: self::$action . $ext; //模板文件重命名
-        // TEMPPLATE_PATH . . self::$module . self::$controller . DS .$sourcefile;
+
+        $sourcefile = $file ? $file . Conf::get('template')['suffix'] : self::$action . Conf::get('template')['suffix']; //模板文件重命名
         $path = TEMPPLATE_PATH . self::$module . self::$controller . DS .$sourcefile ?
                 TEMPPLATE_PATH . self::$module . DS . self::$controller . DS .$sourcefile :
                 TEMPPLATE_PATH . self::$controller . DS .$sourcefile;//模板文件地址拼接
         if(is_file($path)){
             //smarty实例化
             $smarty = new \Smarty();
-            $smarty->left_delimiter = "{";
-            $smarty->right_delimiter = "}";
+            $smarty->left_delimiter = Conf::get('template')['begin'];
+            $smarty->right_delimiter = Conf::get('template')['end'];
             $smarty->setConfigDir(CONF_PATH );
             $smarty->setTemplateDir(TEMPPLATE_PATH); //设置模板目录
             $smarty->setCompileDir(RUNTIME_PATH . '/templates/cache');

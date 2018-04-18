@@ -3,14 +3,15 @@
  * Oobio - 简单、高效的PHP微框架
  * Copyright (c) 2018 Oobio . All rights reserved.
  * Author: 勇敢的小笨羊
- * Github: https://github.com/superpig595/OoBio
+ * Github: https://github.com/SingleSheep/OoBio
  * Weibo: http://weibo.com/xuzuxing
  *
  */
 
 // Oobio 基础文件
-define('OOBIO_VERSION', '1.0');
+define('OOBIO_VERSION', '1.0.0');
 define('DS', DIRECTORY_SEPARATOR);
+define('EXT', '.php');
 defined('MODULE') or define('MODULE', 'index'); // 默认访问
 defined('ROOT') or define('ROOT', dirname(realpath('./')) . DS); //当前项目根目录路径;
 defined('CORE') or define('CORE', ROOT.'oobio' .DS);//框架的核心文件目录

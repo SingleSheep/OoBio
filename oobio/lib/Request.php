@@ -3,7 +3,7 @@
  * Oobio - 简单、高效的PHP微框架
  * Copyright (c) 2018 Oobio . All rights reserved.
  * Author: 勇敢的小笨羊
- * Github: https://github.com/superpig595/OoBio
+ * Github: https://github.com/SingleSheep/OoBio
  * Weibo: http://weibo.com/xuzuxing
  *
  */
@@ -16,17 +16,58 @@ class Request
     /**
      * @var array 请求参数
      */
-    protected $param   = array();
-    protected $get     = array();
-    protected $post    = array();
-    protected $request = array();
-    protected $route   = array();
+    protected $param   = [];
+
+    /**
+     * @var array
+     */
+    protected $get     = [];
+
+    /**
+     * @var array
+     */
+    protected $post    = [];
+
+    /**
+     * @var array
+     */
+    protected $request = [];
+
+    /**
+     * @var array
+     */
+    protected $route   = [];
+
+    /**
+     *
+     */
     protected $put;
-    protected $session = array();
-    protected $file    = array();
-    protected $cookie  = array();
-    protected $server  = array();
-    protected $header  = array();
+
+    /**
+     * @var array
+     */
+    protected $session = [];
+
+    /**
+     * @var array
+     */
+    protected $file    = [];
+
+    /**
+     * @var array
+     */
+    protected $cookie  = [];
+
+    /**
+     * @var array
+     */
+    protected $server  = [];
+
+    /**
+     * @var array
+     */
+    protected $header  = [];
+    
     /**
      * 设置或者获取当前的Header
      * @access public
@@ -37,7 +78,7 @@ class Request
     public function header($name = '', $default = null)
     {
         if (empty($this->header)) {
-            $header = array();
+            $header = [];
             if (function_exists('apache_request_headers') && $result = apache_request_headers()) {
                 $header = $result;
             } else {
@@ -74,7 +115,7 @@ class Request
      * @param bool $fitt
      * @return bool
      */
-    function post($name, $default = false, $fitt = false)
+    public static function post($name, $default = false, $fitt = false)
     {
         if (isset($_POST[$name])) {
             if ($fitt) {
@@ -97,7 +138,7 @@ class Request
                 return $_POST[$name];
             }
         } else {
-            return $default;
+            return $_POST;
         }
     }
 
@@ -108,7 +149,7 @@ class Request
      * @param bool $fitt
      * @return bool
      */
-    public function get($name, $default = false, $fitt = false)
+    public static function get($name = '', $default = false, $fitt = false)
     {
         if (isset($_GET[$name])) {
             if ($fitt) {
@@ -131,7 +172,7 @@ class Request
                 return $_GET[$name];
             }
         } else {
-            return $default;
+            return $_GET;
         }
     }
 }

@@ -14,6 +14,12 @@ return [
      * TEMPLATE 模板配置
      */
     'template'  =>  [
-        'path'    =>  '配置里的path'
+        // 标签库标签开始标记
+        'begin'     => '{',
+        // 标签库标签结束标记
+        'end'       => '}',
+        // 模板后缀
+        'suffix'    => '.html',
+        'path'      =>  '配置里的path'
     ],
 ];
